@@ -10,7 +10,7 @@ export default function Routes() {
             Climbing Routes
           </h1>
           <p className="text-gray-600">
-            This is where we'll show all the climbing routes with filters.
+            Climbing routes with filters will go here.
           </p>
         </div>
       </div>

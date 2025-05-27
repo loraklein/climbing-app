@@ -10,7 +10,7 @@ export default function Profile() {
             My Climbing Profile
           </h1>
           <p className="text-gray-600">
-            This is where we'll show your completed climbs and progress.
+            Completed climbs and progress will go here.
           </p>
         </div>
       </div>
