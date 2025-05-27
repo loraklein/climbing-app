@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect, useRef } from 'react'
 import Navbar from '../../components/Navbar'
 
@@ -22,8 +23,17 @@ export default function Routes() {
   const [loading, setLoading] = useState(true)
   const [typeFilter, setTypeFilter] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [completedRoutes, setCompletedRoutes] = useState<number[]>([])
   
   const searchInputRef = useRef<HTMLInputElement>(null)
+
+  const toggleCompleted = (routeId: number) => {
+    setCompletedRoutes(prev => 
+      prev.includes(routeId) 
+        ? prev.filter(id => id !== routeId)
+        : [...prev, routeId]
+    )
+  }
 
   useEffect(() => {
     async function fetchRoutes() {
@@ -45,12 +55,10 @@ export default function Routes() {
   useEffect(() => {
     let filtered = routes
 
-    // Filter by type
     if (typeFilter) {
       filtered = filtered.filter(route => route.type === typeFilter)
     }
 
-    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(route => 
         route.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -91,7 +99,6 @@ export default function Routes() {
             Climbing Routes
           </h1>
           
-          {/* Filters */}
           <div className="bg-white p-4 rounded-lg shadow mb-6">
             <div className="flex gap-4 flex-wrap">
               <input
@@ -123,16 +130,26 @@ export default function Routes() {
             </div>
           </div>
 
-          {/* Results count */}
           <p className="mb-4 text-gray-600">
             Showing {filteredRoutes.length} of {routes.length} routes
           </p>
           
-          {/* Routes list */}
           <div className="grid gap-4">
             {filteredRoutes.map(route => (
               <div key={route.id} className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-bold">{route.name}</h2>
+                <div className="flex justify-between items-start mb-2">
+                  <h2 className="text-xl font-bold">{route.name}</h2>
+                  <button
+                    onClick={() => toggleCompleted(route.id)}
+                    className={`px-3 py-1 rounded text-sm font-medium ${
+                      completedRoutes.includes(route.id)
+                        ? 'bg-green-100 text-green-800 border border-green-300'
+                        : 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200'
+                    }`}
+                  >
+                    {completedRoutes.includes(route.id) ? '✓ Completed' : 'Mark Complete'}
+                  </button>
+                </div>
                 <p className="text-gray-600">{route.grade} • {route.type}</p>
                 <p className="text-sm text-gray-500 mb-2">{route.location}</p>
                 <p className="text-gray-700">{route.description}</p>
