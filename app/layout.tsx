@@ -1,26 +1,37 @@
 import type { Metadata } from 'next'
-import { Inter, Roboto_Slab } from 'next/font/google'
+import { Geist, Geist_Mono, Roboto_Slab } from 'next/font/google'
 import './globals.css'
+import Navbar from '../components/Navbar'
 
-const inter = Inter({ subsets: ['latin'] })
-const robotoSlab = Roboto_Slab({ 
+const geistSans = Geist({
+  variable: '--font-geist-sans',
   subsets: ['latin'],
-  variable: '--font-roboto-slab'
+})
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
+
+const robotoSlab = Roboto_Slab({
+  variable: '--font-roboto-slab',
+  subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: 'Local Crag Explorer',
-  description: 'Discover climbing routes in your area',
+  description: 'Discover and track climbing routes in your area',
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${robotoSlab.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${robotoSlab.variable} antialiased`}>
+        <Navbar />
         {children}
       </body>
     </html>
