@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # Manual trigger - adds "Run workflow" button
 
 jobs:
   hello:
@@ -11,5 +12,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
       - name: run echo
         run: echo "Hello, world!"
+        
+      - name: check node version
+        run: node --version
+        
+      - name: list repository files
+        run: ls -la
+        
+      - name: show repository info
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
