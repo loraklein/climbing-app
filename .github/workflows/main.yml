@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Manual trigger - adds "Run workflow" button
+  workflow_dispatch: 
 
 jobs:
   hello:
@@ -27,3 +27,12 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "Branch: ${{ github.ref }}"
           echo "Commit: ${{ github.sha }}"
+          
+      - name: fetch daily motivation
+        run: curl -s "https://api.chucknorris.io/jokes/random" | jq -r '.value'
+        
+      - name: show current time and fun facts
+        run: |
+          echo "Current time: $(date)"
+          echo "Days until New Year: $(( ($(date -d '2026-01-01' +%s) - $(date +%s)) / 86400 ))"
+          echo "Random number of the day: $RANDOM"
