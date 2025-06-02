@@ -1,0 +1,15 @@
+name: hello world
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: run echo
+        run: echo "Hello, world!"
