@@ -38,35 +38,6 @@ export default function RouteCard({ route, isCompleted, onToggleCompleted, onRou
 
   const typeStyle = getRouteTypeStyle(route.route_type)
 
-  const renderStars = (rating: number | null) => {
-    if (!rating || rating === 0) {
-      return <span className="text-gray-400 text-sm">No rating</span>
-    }
-    
-    const stars = []
-    const fullStars = Math.floor(rating)
-    const hasHalfStar = rating % 1 !== 0
-    
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={i} className="text-yellow-400">★</span>)
-    }
-    
-    if (hasHalfStar) {
-      stars.push(<span key="half" className="text-yellow-400">☆</span>)
-    }
-    
-    for (let i = stars.length; i < 5; i++) {
-      stars.push(<span key={i} className="text-gray-300">★</span>)
-    }
-    
-    return (
-      <div className="flex items-center">
-        <div className="flex">{stars}</div>
-        <span className="ml-1 text-sm text-gray-600">({Number(rating).toFixed(1)})</span>
-      </div>
-    )
-  }
-
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
       <Link href={`/routes/${route.id}`}>

@@ -62,7 +62,7 @@ export default function RouteFilters({
             <span className="text-sm text-gray-600">Active filters:</span>
             {searchTerm && (
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Search: "{searchTerm}"
+                Search: &apos;{searchTerm}&apos;
                 <button
                   onClick={() => onSearchChange('')}
                   className="ml-1 text-green-600 hover:text-green-800"

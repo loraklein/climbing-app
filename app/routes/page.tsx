@@ -1,36 +1,20 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import RouteFilters from '../../components/RouteFilters'
 import RouteList from '../../components/RouteList'
-
-// Updated interface to match your backend API
-interface ClimbingRoute {
-  id: number
-  route_name: string
-  grade: string
-  route_type: string
-  location: string
-  description: string | null
-  length_feet: number | null
-  first_ascent_year: number | null
-  rating: number | null
-}
 
 export default function Routes() {
   const [routes, setRoutes] = useState([])
   const [loading, setLoading] = useState(true)
   const [searching, setSearching] = useState(false) // Separate search loading state
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const [typeFilter, setTypeFilter] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-  const [completedRoutes, setCompletedRoutes] = useState([])
+  const [completedRoutes, setCompletedRoutes] = useState<number[]>([])
 
-  // Remove the useMemo filteredRoutes since we're filtering on backend now
-  // const filteredRoutes = useMemo(() => { ... }) - REMOVED
-
-  const toggleCompleted = (routeId) => {
+  const toggleCompleted = (routeId: number) => {
     setCompletedRoutes(prev => 
       prev.includes(routeId) 
         ? prev.filter(id => id !== routeId)
@@ -90,14 +74,33 @@ export default function Routes() {
   }
 
   // Update filter handlers - debounce search, immediate type filter
-  const handleTypeFilterChange = (newType) => {
+  interface Route {
+    id: number
+    name: string
+    type: string
+    location: string
+    [key: string]: any
+  }
+
+  interface FetchRoutesResponse {
+    routes: Route[]
+  }
+
+  const handleTypeFilterChange = (newType: string) => {
     setTypeFilter(newType)
     fetchRoutes(newType, searchTerm)
   }
 
-  const handleSearchChange = (newSearch) => {
+  interface SearchChangeEvent {
+    target: { value: string }
+  }
+
+  interface HandleSearchChange {
+    (newSearch: string): void
+  }
+
+  const handleSearchChange: HandleSearchChange = (newSearch: string) => {
     setSearchTerm(newSearch)
-    // Don't call fetchRoutes immediately - let useEffect handle it with debounce
   }
 
   // Debounced search effect

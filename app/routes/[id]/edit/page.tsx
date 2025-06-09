@@ -207,7 +207,7 @@ export default function EditRoute() {
               Back to route details
             </Link>
             <h1 className="text-3xl font-bold text-gray-900">Edit Route</h1>
-            <p className="text-gray-600 mt-2">Update "{route.route_name}"</p>
+            <p className="text-gray-600 mt-2">{`Update "${route.route_name}"`}</p>
           </div>
 
           {error && (
