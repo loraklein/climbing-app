@@ -14,6 +14,9 @@ export default function Navbar() {
           <Link href="/routes" className="hover:text-green-200">
             Routes
           </Link>
+          <Link href="/climbers" className="hover:text-green-200">
+            Climbers
+          </Link>
           <Link href="/profile" className="hover:text-green-200">
             My Profile
           </Link>
