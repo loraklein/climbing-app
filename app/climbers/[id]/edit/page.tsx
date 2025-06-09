@@ -3,10 +3,11 @@
 import EditClimberForm from '../../../../components/EditClimberForm'
 
 type Props = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default function EditClimberPage({ params }: Props) {
-  return <EditClimberForm id={params.id} />
-} 
+export default async function EditClimberPage({ params }: Props) {
+  const { id } = await params
+  return <EditClimberForm id={id} />
+}
