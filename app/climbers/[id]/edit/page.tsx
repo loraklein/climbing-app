@@ -1,11 +1,9 @@
 import EditClimberForm from '../../../../components/EditClimberForm'
 
-interface PageProps {
-  params: {
-    id: string
-  }
-}
-
-export default function EditClimberPage({ params }: PageProps) {
+export default function EditClimberPage({
+  params,
+}: {
+  params: { id: string }
+}) {
   return <EditClimberForm id={params.id} />
 } 
