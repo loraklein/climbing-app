@@ -5,10 +5,22 @@ import Link from 'next/link'
 import RouteFilters from '../../components/RouteFilters'
 import RouteList from '../../components/RouteList'
 
+interface ClimbingRoute {
+  id: number
+  route_name: string
+  grade: string
+  route_type: string
+  location: string
+  description: string | null
+  length_feet: number | null
+  first_ascent_year: number | null
+  rating: number | null
+}
+
 export default function Routes() {
-  const [routes, setRoutes] = useState([])
+  const [routes, setRoutes] = useState<ClimbingRoute[]>([])
   const [loading, setLoading] = useState(true)
-  const [searching, setSearching] = useState(false) // Separate search loading state
+  const [searching, setSearching] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [typeFilter, setTypeFilter] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
@@ -25,12 +37,10 @@ export default function Routes() {
   const clearFilters = () => {
     setTypeFilter('')
     setSearchTerm('')
-    // Fetch routes without any filters
     fetchRoutes()
   }
 
   const handleRouteUpdated = () => {
-    // Refresh the routes list after an update (maintain current filters)
     fetchRoutes(typeFilter, searchTerm)
   }
 
@@ -39,11 +49,10 @@ export default function Routes() {
       if (isInitialLoad) {
         setLoading(true)
       } else {
-        setSearching(true) // Use separate loading state for searches
+        setSearching(true)
       }
       setError(null)
       
-      // Build query parameters
       const params = new URLSearchParams()
       if (routeType) params.append('route_type', routeType)
       if (location) params.append('location', location)
@@ -73,64 +82,26 @@ export default function Routes() {
     }
   }
 
-  // Update filter handlers - debounce search, immediate type filter
-  interface Route {
-    id: number
-    name: string
-    type: string
-    location: string
-    [key: string]: any
-  }
-
-  interface FetchRoutesResponse {
-    routes: Route[]
-  }
-
   const handleTypeFilterChange = (newType: string) => {
     setTypeFilter(newType)
     fetchRoutes(newType, searchTerm)
   }
 
-  interface SearchChangeEvent {
-    target: { value: string }
-  }
-
-  interface HandleSearchChange {
-    (newSearch: string): void
-  }
-
-  const handleSearchChange: HandleSearchChange = (newSearch: string) => {
+  const handleSearchChange = (newSearch: string) => {
     setSearchTerm(newSearch)
   }
 
-  // Debounced search effect
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      fetchRoutes(typeFilter, searchTerm)
-    }, 800) // Wait 800ms after user stops typing (increased from 500ms)
-
-    return () => clearTimeout(timeoutId)
-  }, [searchTerm]) // Only trigger when searchTerm changes
-
-  // Immediate filter effect for type changes
-  useEffect(() => {
-    if (typeFilter !== '') {
-      fetchRoutes(typeFilter, searchTerm)
-    }
-  }, [typeFilter])
-
-  useEffect(() => {
-    fetchRoutes('', '', true) // Mark as initial load
+    fetchRoutes('', '', true) 
   }, [])
 
-  // Debounced search effect
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchRoutes(typeFilter, searchTerm)
-    }, 500) // Wait 500ms after user stops typing
+    }, 800)
 
     return () => clearTimeout(timeoutId)
-  }, [searchTerm]) // Only trigger when searchTerm changes
+  }, [searchTerm, typeFilter])
 
   if (loading) {
     return (
