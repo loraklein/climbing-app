@@ -1,9 +1,12 @@
+'use client'
+
 import EditClimberForm from '../../../../components/EditClimberForm'
 
-export default function EditClimberPage({
-  params,
-}: {
+type Props = {
   params: { id: string }
-}) {
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default function EditClimberPage({ params }: Props) {
   return <EditClimberForm id={params.id} />
 } 
