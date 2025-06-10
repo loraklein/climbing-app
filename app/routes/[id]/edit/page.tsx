@@ -128,7 +128,7 @@ export default function EditRoute() {
         throw new Error(data.message || 'Failed to update route')
       }
 
-      router.push(`/routes/${id}`)
+      router.push(`/routes`)
     } catch (error) {
       console.error('Error updating route:', error)
       setError(error instanceof Error ? error.message : 'Failed to update route')

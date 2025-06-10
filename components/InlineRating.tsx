@@ -28,7 +28,6 @@ export default function InlineRating({ routeId, currentRating, onRatingUpdated }
 
       onRatingUpdated()
       setIsEditing(false)
-      alert('Rating updated!')
     } catch (error) {
       console.error('Error updating rating:', error)
       alert('Failed to update rating')

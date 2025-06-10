@@ -1,13 +1,11 @@
 'use client'
 
+import { useParams } from 'next/navigation'
 import EditClimberForm from '../../../../components/EditClimberForm'
 
-type Props = {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export default async function EditClimberPage({ params }: Props) {
-  const { id } = await params
+export default function EditClimberPage() {
+  const params = useParams()
+  const id = params.id as string
+  
   return <EditClimberForm id={id} />
 }
