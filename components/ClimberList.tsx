@@ -87,9 +87,12 @@ export default function ClimberList({ climbers, onClimberUpdated }: ClimberListP
           <div key={climber.id} className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  {climber.climber_name}
-                </h3>
+                {/* UPDATED: Make climber name clickable */}
+                <Link href={`/climbers/${climber.id}`}>
+                  <h3 className="text-lg font-medium text-gray-900 hover:text-green-600 cursor-pointer transition-colors">
+                    {climber.climber_name}
+                  </h3>
+                </Link>
                 <p className="mt-1 text-sm text-gray-500">{climber.email}</p>
                 <div className="mt-2 flex items-center space-x-4">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -136,6 +139,13 @@ export default function ClimberList({ climbers, onClimberUpdated }: ClimberListP
                 </div>
               </div>
               <div className="flex items-center space-x-4">
+                {/* UPDATED: Add "View" link for clarity */}
+                <Link
+                  href={`/climbers/${climber.id}`}
+                  className="text-sm text-green-600 hover:text-green-900 cursor-pointer"
+                >
+                  View
+                </Link>
                 <Link
                   href={`/climbers/${climber.id}/edit`}
                   className="text-sm text-blue-600 hover:text-blue-900 cursor-pointer"
@@ -155,4 +165,4 @@ export default function ClimberList({ climbers, onClimberUpdated }: ClimberListP
       </div>
     </div>
   )
-} 
+}
